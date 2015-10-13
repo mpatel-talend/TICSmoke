@@ -24,7 +24,7 @@ public class TIC003_ScheduleNow {
 	@Parameters(value = { "browser", "environment","scheduler"})
 	@Test
 	public void testScheduleNow(String browser, String environment,String scheduler){
-	
+
 		pageMain=commons.setupTest(browser,environment);
 
 		pageFlowBuilder=commons.createFlow(pageMain);
