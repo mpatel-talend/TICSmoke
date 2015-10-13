@@ -32,9 +32,7 @@ public class CommonScript {
 	Logger log = Logger.getLogger(CommonScript.class);
 	long start;
 
-	
-	//@Parameters(value = { "browser", "environment" })
-	
+
 		public MainPage setupTest(String browser, String environment) {
 			try {
 
@@ -51,8 +49,6 @@ public class CommonScript {
 				start = System.currentTimeMillis();
 				LogConfig.setLogger();
 
-//				String browser = "firefox";
-//				String environment = "local";
 
 				log.info("retrieving the browser #" + browser + " on #" + 
 						environment +" environment.");
@@ -65,15 +61,15 @@ public class CommonScript {
 				log.info("loading the locators in the driver");
 				pageLogin = PageBase.getPageFactory(driver,LoginPage.class);
 
-				String baseURL = ConfigurationReader.get("baseURL");
+				String baseURL = System.getProperty("baseURL");
 				log.info("navigating to the URL - "+ baseURL);
 				pageLogin.open(baseURL);
 
-				String username = ConfigurationReader.get("username");
+				String username = System.getProperty("username");
 				log.info("Entering username - " + username);
 				pageLogin.enterUserName(username);
 
-				String password = ConfigurationReader.get("password");
+				String password = System.getProperty("password");
 				log.info("Entering password");
 				pageLogin.enterPassword(password);
 
@@ -144,8 +140,8 @@ public class CommonScript {
 					log.info("clicking on add action button");
 					pageManage.clickAddActivityFromExchangeButton();
 
-					String exchangeUsername = ConfigurationReader.get("exchangeUsername");
-					String exchangePassword = ConfigurationReader.get("exchangePassword");
+					String exchangeUsername = System.getProperty("xchangeUsername");
+					String exchangePassword = System.getProperty("xchangePassword");
 
 					log.info("logging into Exchange");
 					log.info("enter exchange username - "+ exchangeUsername);

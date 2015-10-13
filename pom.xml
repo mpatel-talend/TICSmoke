@@ -23,30 +23,37 @@
 		</dependency>
 	</dependencies>
 	<build>
-        <!-- Source directory configuration -->
-        <sourceDirectory>src</sourceDirectory>
-        <plugins>
-            <!-- Following plugin executes the testng tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.14.1</version>
-                <configuration>
-                    <!-- Suite testng xml file to consider for test execution -->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>TICSmoke.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                </configuration>
-            </plugin>
-            <!-- Compiler plugin configures the java version to be usedfor compiling
-                the code -->
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+		<!-- Source directory configuration -->
+		<sourceDirectory>src</sourceDirectory>
+		<plugins>
+			<!-- Following plugin executes the testng tests -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.14.1</version>
+				<configuration>
+					<systemPropertyVariables>
+						<baseURL>${env.baseURL}</baseURL>
+						<username>${env.username}</username>
+						<password>${env.password}</password>
+						<xchangeUsername>${env.XchangeUsername}</xchangeUsername>
+						<xchangePassword>${env.XchangeUsername}</xchangePassword>
+					</systemPropertyVariables>
+					<!-- Suite testng xml file to consider for test execution -->
+					<suiteXmlFiles>
+						<suiteXmlFile>TICSmoke.xml</suiteXmlFile>
+					</suiteXmlFiles>
+				</configuration>
+			</plugin>
+			<!-- Compiler plugin configures the java version to be usedfor compiling 
+				the code -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>   

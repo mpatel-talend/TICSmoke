@@ -21,14 +21,10 @@ public class TIC003_ScheduleNow {
 	private CommonScript commons = new CommonScript();
 	Logger log = Logger.getLogger(TIC003_ScheduleNow.class);
 
-	//	@Parameters(value = { "browser", "environment","scheduler"})
+	@Parameters(value = { "browser", "environment","scheduler"})
 	@Test
-	//public void testScheduleNow(String browser, String environment,String scheduler){
-	public void testScheduleNow(){
-
-		String browser = "firefox";
-		String environment = "local";
-		String scheduler = "Daily";
+	public void testScheduleNow(String browser, String environment,String scheduler){
+	
 		pageMain=commons.setupTest(browser,environment);
 
 		pageFlowBuilder=commons.createFlow(pageMain);

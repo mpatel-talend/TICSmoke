@@ -87,10 +87,10 @@ public class FlowsPage extends PageBase{
 
 	@FindBy(xpath = "//div[@data-list-model='flows']/div[1]/div/div/div[2]/div")
 	private WebElement flowsTitles;
-	
+
 	@FindBy(css = "div[data-list-model='flows']")
 	private WebElement flowsResultList;
-	
+
 	public WebDriver getDriver(){
 
 
@@ -202,7 +202,7 @@ public class FlowsPage extends PageBase{
 
 		super.waitForVisibilityOfElement(runningCount);
 		int runCount,allRunCount,secCount=23;
-	
+
 		if(_isScheduled){
 			while(secCount>0){
 
@@ -363,8 +363,8 @@ public class FlowsPage extends PageBase{
 		String flowTitlePath,flowName ;
 		WebElement flowTitle = null;
 		List<WebElement> flows = flowsResultList.findElements(By.xpath(".//div[@data-ng-repeat='node in listModel']"));
-		
-		
+
+
 		for(int i=1;i<=flows.size();i++){
 
 			try{
@@ -405,14 +405,14 @@ public class FlowsPage extends PageBase{
 		String time[] = onlyTime.split(",");
 
 		String times[]=time[1].trim().split("\\s+");
-		
+
 		if(times[1].length()==1){
 
 			times[1] = "0"+times[1];
 		}
 
 		String actualTime,expectedTime;
-		
+
 		if(_schedulePeriod.equalsIgnoreCase("Daily")){
 
 			actualTime = time[0] +", "+ times[0]+" "+times[1];
@@ -420,12 +420,14 @@ public class FlowsPage extends PageBase{
 			expectedTime = _schedulePeriod +", Everyday "+ _scheduleTime;
 		}
 		else{
-			 actualTime = time[0] +","+ times[0]+" "+times[1]+" "+times[2]+" "+times[3];
 
-			 expectedTime = _schedulePeriod +","+ new SimpleDateFormat("MMM dd YYYY",Locale.ENGLISH).format(new Date()) + " " + _scheduleTime;
+			times[1] = times[1].replaceAll("\\D+", "");
+			actualTime = time[0] +","+ times[0]+" "+times[1]+" "+times[2]+" "+times[3];
+
+			expectedTime = _schedulePeriod +","+ new SimpleDateFormat("MMM dd YYYY",Locale.ENGLISH).format(new Date()) + " " + _scheduleTime;
 
 		}
-		
+
 		Assertion.assertEquals(getDriver(), actualTime, expectedTime, "Actual Scheduled time("+actualTime+") "
 				+ "does not match with expected time("+ expectedTime+")", "ScheduleTimeDisplayError");
 	}
@@ -484,6 +486,6 @@ public class FlowsPage extends PageBase{
 
 
 	}
-	
-	
+
+
 }

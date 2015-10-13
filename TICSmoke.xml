@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<suite name="TIC-Smoke" parallel="tests" thread-count="2">
+<suite name="TIC-Smoke" parallel="fasle" thread-count="1">
 
 	<parameter name="environment" value="local"></parameter>
 	<parameter name="browser" value="firefox"></parameter>
@@ -22,19 +22,19 @@
 		</classes>
 	</test> -->
 	
-	<test name="ScheduleNow">
+	 <test name="ScheduleNow">
 	<parameter name="scheduler" value="Run Once"></parameter>
 		<classes>
 			<class name="com.talend.tic.scripts.TIC003_ScheduleNow"></class>
 		</classes>
-	</test> 
+	</test>
 
-	<test name="ScheduleDaily">
+	<!-- <test name="ScheduleDaily">
 	<parameter name="scheduler" value="Daily"></parameter>
 		<classes>
 			<class name="com.talend.tic.scripts.TIC003_ScheduleNow"></class>
 		</classes>
-	</test>
+	</test> -->
 	
 
 
