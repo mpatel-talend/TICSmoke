@@ -69,7 +69,7 @@ public class TIC002_TestJob {
 
 			log.error("An exception occured : " + ex.getMessage(),ex);
 			Assertion.fail(pageFlow.getDriver(), "An exception occured "
-					+ ": " + ex.getMessage(), "GoLive");
+					+ ": " + ex.getMessage(), "TestJob");
 
 		}
 	}

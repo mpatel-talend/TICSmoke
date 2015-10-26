@@ -67,7 +67,7 @@ public class TIC003_ScheduleNow {
 
 			log.error("An exception occured : " + ex.getMessage(),ex);
 			Assertion.fail(pageFlow.getDriver(), "An exception occured "
-					+ ": " + ex.getMessage(), "GoLive");
+					+ ": " + ex.getMessage(), "ScheduleNow");
 
 		}
 	}
