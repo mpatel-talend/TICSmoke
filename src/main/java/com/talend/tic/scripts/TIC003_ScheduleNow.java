@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.talend.tic.api.Assertion;
 import com.talend.tic.pages.FlowBuilderPage;
 import com.talend.tic.pages.FlowsPage;
 import com.talend.tic.pages.MainPage;
@@ -25,44 +26,50 @@ public class TIC003_ScheduleNow {
 	@Test
 	public void testScheduleNow(String browser, String environment,String scheduler){
 
-		pageMain=commons.setupTest(browser,environment);
+		try{
+			pageMain=commons.setupTest(browser,environment);
 
-		pageFlowBuilder=commons.createFlow(pageMain);
+			pageFlowBuilder=commons.createFlow(pageMain);
 
-		log.info("click on Go Live button");
-		pageFlowBuilder.clickOnGoLive();
+			log.info("click on Go Live button");
+			pageFlowBuilder.clickOnGoLive();
 
-		log.info("select #Run Once option from schedule dropdown");
-		pageFlowBuilder.selectGoLiveSchedule(scheduler);
+			log.info("select #Run Once option from schedule dropdown");
+			pageFlowBuilder.selectGoLiveSchedule(scheduler);
 
-		log.info("enter europe/berlin time zone");
-		pageFlowBuilder.selectTimeZone("Europe/Berlin");
+			log.info("enter europe/berlin time zone");
+			pageFlowBuilder.selectTimeZone("Europe/Berlin");
 
 
-		String scheduledTime = pageFlowBuilder.generatScheduledTime();
-		
-		log.info("schedule job to start running at "+ scheduledTime +"hours");
-		pageFlowBuilder.enterScheduleRunTime(scheduledTime);
+			String scheduledTime = pageFlowBuilder.generatScheduledTime();
 
-		log.info("click on Go button");
-		pageFlow = pageFlowBuilder.clickOnApplyScheduleForGoLiveEnvironment();
+			log.info("schedule job to start running at "+ scheduledTime +"hours");
+			pageFlowBuilder.enterScheduleRunTime(scheduledTime);
 
-		log.info("verify if job completed successfully");
+			log.info("click on Go button");
+			pageFlow = pageFlowBuilder.clickOnApplyScheduleForGoLiveEnvironment();
 
-		if(scheduler.contains("Once")){
-			pageFlow.verifyScheduledRunTime(scheduledTime, "Once");
+			log.info("verify if job completed successfully");
+
+			if(scheduler.contains("Once")){
+				pageFlow.verifyScheduledRunTime(scheduledTime, "Once");
+			}
+			else{
+				pageFlow.verifyScheduledRunTime(scheduledTime, "Daily");
+			}
+			log.info("verify if job completed successfully");
+			pageFlow.verifyJobRunSuccessfully(true,scheduledTime);
+
+			commons.cleaningTask(pageFlow);
+
+
+		}catch(Exception ex){
+
+			log.error("An exception occured : " + ex.getMessage(),ex);
+			Assertion.fail(pageFlow.getDriver(), "An exception occured "
+					+ ": " + ex.getMessage(), "GoLive");
+
 		}
-		else{
-			pageFlow.verifyScheduledRunTime(scheduledTime, "Daily");
-		}
-		log.info("verify if job completed successfully");
-		pageFlow.verifyJobRunSuccessfully(true,scheduledTime);
-
-		commons.cleaningTask(pageFlow);
-
-
 	}
-
-	
 
 }

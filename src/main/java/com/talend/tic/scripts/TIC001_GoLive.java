@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import com.talend.tic.api.Assertion;
 import com.talend.tic.pages.FlowBuilderPage;
 import com.talend.tic.pages.FlowsPage;
 import com.talend.tic.pages.MainPage;
@@ -17,28 +18,35 @@ public class TIC001_GoLive {
 	private FlowBuilderPage pageFlowBuilder;
 	private CommonScript commons = new CommonScript();
 	Logger log = Logger.getLogger(TIC001_GoLive.class);
-	
+
 	@Parameters(value = { "browser", "environment" })
 	@Test
 	public void testGoLive(String browser, String environment){
 
-		pageMain=commons.setupTest(browser,environment);
-		
-		pageFlowBuilder=commons.createFlow(pageMain);
-		
-		log.info("click on Go Live button");
-		pageFlowBuilder.clickOnGoLive();
+		try{
+			pageMain=commons.setupTest(browser,environment);
 
-		log.info("click on Go button");
-		pageFlow = pageFlowBuilder.clickOnApplyScheduleForGoLiveEnvironment();
+			pageFlowBuilder=commons.createFlow(pageMain);
 
-		log.info("verify if job completed successfully");
-		pageFlow.verifyJobRunSuccessfully(false,null);
+			log.info("click on Go Live button");
+			pageFlowBuilder.clickOnGoLive();
 
-		commons.cleaningTask(pageFlow);
+			log.info("click on Go button");
+			pageFlow = pageFlowBuilder.clickOnApplyScheduleForGoLiveEnvironment();
+
+			log.info("verify if job completed successfully");
+			pageFlow.verifyJobRunSuccessfully(false,null);
+
+			commons.cleaningTask(pageFlow);
+
+		}catch(Exception ex){
+
+			log.error("An exception occured : " + ex.getMessage(),ex);
+			Assertion.fail(pageFlow.getDriver(), "An exception occured "
+					+ ": " + ex.getMessage(), "GoLive");
+
+		}
+
 	}
-
-
-	
 
 }
